@@ -6,22 +6,22 @@ import comm.DiscoveryListener;
 import util.RemoteDevice;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Vector;
 
 public class Model implements DiscoveryListener {
 
     DeviceDiscoveryQuery discoveryQuery;
-    DeviceDiscovery discovery;
+    DeviceDiscovery discovery = new DeviceDiscovery();
 
-    public void Model() {
-
+    public Model() throws SocketException {
     }
 
     public void discoverDevices() throws IOException {
         long discoveryTimeout = 60000;
 
-        discovery = new DeviceDiscovery();
         discovery.start();
         discovery.addListener(this);
 
@@ -36,6 +36,10 @@ public class Model implements DiscoveryListener {
                 discoveryQuery.interrupt();
             }
         }, discoveryTimeout);
+    }
+
+    public Vector<RemoteDevice> getDevices() {
+        return discovery.remoteDevices;
     }
 
     @Override

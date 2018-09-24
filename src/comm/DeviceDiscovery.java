@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class DeviceDiscovery implements Runnable {
 
     private List<DiscoveryListener> listeners = new ArrayList<>();
-    public Vector<RemoteDevice> remoteDevices;
+    public Vector<RemoteDevice> remoteDevices = new Vector<>();
     private Thread worker;
     private AtomicBoolean running = new AtomicBoolean(false);
     private DatagramSocket socket = null;
@@ -22,7 +22,6 @@ public class DeviceDiscovery implements Runnable {
     public DeviceDiscovery() throws SocketException {
         int receivePort = 8001;
         socket = new DatagramSocket(receivePort);
-        remoteDevices = new Vector<>();
     }
 
     public void addListener(DiscoveryListener toAdd) {
